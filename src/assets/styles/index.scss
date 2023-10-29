@@ -1,0 +1,13 @@
+//混合
+@import "./mixins.scss";
+//变量
+@import "./variables.scss";
+
+//样式重置
+@import "normalize.css";
+//通用类名样式
+@import "./common.scss";
+//在全局修改element-plus的样式
+@import "./element-plus.scss";
+//动画过渡
+@import "./transition.scss";

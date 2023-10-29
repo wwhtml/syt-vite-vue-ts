@@ -1,0 +1,33 @@
+//颜色
+$base-color: #666666;
+
+$dark-color: #333333;
+
+$light-color: #999999;
+
+$active-color: #4490f1;
+
+$active-light-color: #70adff;
+
+//背景颜色
+
+$bg-white: #ffffff; /* 如果背景是白色，尽量使用透明色 */
+
+$bg-gray: #fafafa;
+
+$bg-light-blue: #f4f9ff;
+
+//app-layout颜色
+$bg-header-color: $bg-white;
+
+$bg-footer-color: $bg-gray;
+
+//hospital 科室选项的背景颜色
+$bg-menu-color: $bg-light-blue;
+
+$bg-menu-group-color: $bg-gray;
+
+$bg-status-bar: $bg-light-blue;
+
+//表格相关颜色
+$bg-table-header: #e8f2ff;
