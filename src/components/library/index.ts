@@ -4,12 +4,16 @@ import type { App } from "vue";
 import AppSearch from "./app-search.vue";
 import AppPage from "./app-page.vue";
 import AppInfiniteLoading from "./app-infinite-loading.vue";
+import AppMenu from "./app-menu.vue";
+import AppMenuItem from "./app-menu-item.vue";
 
 export default {
   install(app: App) {
     app.component("AppSearch", AppSearch);
     app.component("AppPage", AppPage);
     app.component("AppInfiniteLoading", AppInfiniteLoading);
+    app.component("AppMenu", AppMenu);
+    app.component("AppMenuItem", AppMenuItem);
   }
 };
 
