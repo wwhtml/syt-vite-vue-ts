@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 // 注意：script标签内容不能为空，如果这里的内容是空就不会编译
+
+import { useRouter } from "vue-router";
+const router = useRouter();
 </script>
 
 <template>
@@ -10,7 +13,9 @@
     </ul>
 
     <ul class="right">
-      <li v-for="item in 4" :key="item"><span>联系我们</span></li>
+      <li v-for="item in 4" :key="item">
+        <span @click="router.push('/information')">联系我们</span>
+      </li>
     </ul>
   </div>
 </template>

@@ -47,6 +47,54 @@ const routes: RouteRecordRaw[] = [
     //     component: () => import("@/views/hospital/notice/notice.vue")
     //   }
     // ]
+  },
+
+  /************************************
+   * 网站信息
+   */
+  {
+    path: "/information",
+    name: "information",
+    component: () => import("@/views/information/information.vue"),
+    redirect: "/information/contact",
+    children: [
+      {
+        path: "contact",
+        name: "contact",
+        meta: {
+          title: "联系我们",
+          isMenu: true
+        },
+        component: () => import("@/views/information/contact/contact.vue")
+      },
+      {
+        path: "cooperate",
+        name: "cooperate",
+        meta: {
+          title: "合作伙伴",
+          isMenu: true
+        },
+        component: () => import("@/views/information/cooperate/cooperate.vue")
+      },
+      {
+        path: "user-agreement",
+        name: "user-agreement",
+        meta: {
+          title: "用户协议",
+          isMenu: true
+        },
+        component: () => import("@/views/information/user-agreement/user-agreement.vue")
+      },
+      {
+        path: "privacy-agreement",
+        name: "privacy-agreement",
+        meta: {
+          title: "隐私协议",
+          isMenu: true
+        },
+        component: () => import("@/views/information/privacy-agreement/privacy-agreement.vue")
+      }
+    ]
   }
 ];
 

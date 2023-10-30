@@ -3,8 +3,6 @@
 import AppHeader from "@/components/app-header.vue";
 import AppFooter from "@/components/app-footer.vue";
 
-console.log(AppHeader);
-
 const handle = () => {};
 </script>
 
@@ -30,6 +28,7 @@ const handle = () => {};
   padding: 0;
   height: 70px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  z-index: 999;
 }
 .el-main {
   padding: 0;
