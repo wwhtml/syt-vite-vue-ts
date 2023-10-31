@@ -39,6 +39,37 @@
         </div>
       </div>
     </div>
+
+    <div class="main">
+      <el-affix :offset="70">
+        <div class="title">选择科室</div>
+      </el-affix>
+      <div class="dep">
+        <div class="left">
+          <el-affix :offset="150">
+            <el-scrollbar height="460px">
+              <ul class="menu">
+                <li class="menu-item" v-for="item in 100" :key="item">
+                  <span>专科{{ item }}</span>
+                </li>
+              </ul>
+            </el-scrollbar>
+          </el-affix>
+        </div>
+        <div class="right">
+          <div class="dep-group">
+            <div class="dep-title">
+              <span>专科</span>
+            </div>
+            <ul>
+              <li v-for="item in 10" :key="item">
+                <span class="v-link">多发性硬化专科门诊 {{ item }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,6 +104,7 @@
           margin-bottom: 20px;
           p {
             @include font($dark-color, 16px, 400);
+            letter-spacing: 1px;
           }
           & > ul {
             display: flex;
@@ -85,6 +117,82 @@
                 color: $light-color;
                 margin-right: 10px;
               }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .main {
+    margin-top: 10px;
+    .title {
+      padding: 40px 0 20px 0;
+      background-color: #fff;
+    }
+
+    .dep {
+      min-height: 1000px;
+
+      display: flex;
+
+      .left {
+        flex-shrink: 0;
+        width: 170px;
+
+        .menu {
+          padding: 10px 0;
+          background-color: $bg-menu-color;
+          .menu-item {
+            padding: 10px;
+            text-align: center;
+            color: $dark-color;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            &:hover {
+              background-color: #fff;
+            }
+            &.active {
+              background-color: #fff;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+      .right {
+        flex: 1;
+        background-color: aqua;
+        margin-left: 30px;
+        // padding: 20px;
+        .dep-group {
+          padding: 20px;
+
+          &.active {
+            background-color: $bg-menu-group-color;
+          }
+          .dep-title {
+            font-weight: 700;
+            color: $dark-color;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            &:before {
+              content: "";
+              height: 14px;
+              width: 4px;
+              background-color: $active-color;
+              border-radius: 2px;
+              margin-right: 5px;
+              margin-bottom: -1px;
+            }
+          }
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+            li {
+              flex-shrink: 0;
+              margin-top: 15px;
+              width: 33%;
             }
           }
         }
