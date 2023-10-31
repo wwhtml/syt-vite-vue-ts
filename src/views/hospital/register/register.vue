@@ -2,7 +2,7 @@
 //vue
 import { ref, computed, onUpdated, inject } from "vue";
 //vue-router
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 import { getHospitalDetail, getHospitalDeparment } from "@/api/hospital/index";
 import type { HosDetail, Hospital, BookingRule, Department } from "@/api/hospital/types";
@@ -11,7 +11,6 @@ const hospitalAttr = inject("hospitalAttr");
 
 //
 const route = useRoute();
-// const router = useRouter();
 
 //获取参数
 const hoscode = computed((): string => {
