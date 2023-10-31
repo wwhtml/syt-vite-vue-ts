@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -15,10 +15,21 @@ const menuRoute = computed(() => {
 const currentIndex = computed((): string => {
   return route.name as string;
 });
+
+//调整scrollTop
+const pageRef = ref();
+
+const pageScrollTo = (val: string) => {
+  pageRef.value.pageScrollRef.setScrollTop(val);
+};
+
+provide("hospitalAttr", {
+  pageScrollTo: pageScrollTo
+});
 </script>
 
 <template>
-  <app-page>
+  <app-page ref="pageRef">
     <div class="hospital container">
       <div class="left">
         <el-affix :offset="70">

@@ -1,17 +1,101 @@
 <script lang="ts" setup>
-// 注意：script标签内容不能为空，如果这里的内容是空就不会编译
+//vue
+import { ref, computed, onUpdated, inject, watch } from "vue";
+//vue-router
+import { useRoute, useRouter } from "vue-router";
+
+import { getHospitalDetail, getHospitalDeparment } from "@/api/hospital/index";
+import type {
+  HosDetail,
+  Hospital,
+  BookingRule,
+  Department,
+  DepChildren
+} from "@/api/hospital/types";
+
+const hospitalAttr = inject("hospitalAttr");
+
+//
+const route = useRoute();
+const router = useRouter();
+
+//获取参数
+const hoscode = computed((): string => {
+  return route.params.hoscode as string;
+});
+
+//获取数据
+//获取数据
+const bookingRule = ref<BookingRule | null>(null);
+const hospital = ref<Hospital | null>(null);
+
+const getHosDetail = async () => {
+  const res: ResData<HosDetail> = await getHospitalDetail(hoscode.value);
+  if (res.code == 200 && res.data) {
+    bookingRule.value = res.data.bookingRule;
+    hospital.value = res.data.hospital;
+  }
+};
+getHosDetail();
+
+//获取department数据
+const depArr = ref<Department[]>([]);
+const getHosDeparment = async () => {
+  const res: ResData<Department[]> = await getHospitalDeparment(hoscode.value);
+  if (res.code == 200) {
+    console.log(`output->res`, res);
+
+    const data = res.data;
+    //这里之所以删除最后一项，目的是为了完善点击menu，page滚动工能
+    data.pop();
+    depArr.value = data;
+  }
+};
+getHosDeparment();
+
+//获取右侧每一组科室距离顶部的距离组成的数据
+//数组
+const offsetTopArr = ref<number[]>([]);
+
+//dom集合
+const depGroupRef = ref([]);
+
+const getOffsetTop = () => {
+  //注意这个函数只能执行一次，所以不能放到 onUpdated 中,除非每次都清空
+  // console.log(menuGroupRef.value);
+  offsetTopArr.value = [];
+  depGroupRef.value.map((item: HTMLDivElement) => {
+    offsetTopArr.value.push(item.offsetTop - 80);
+  });
+};
+
+onUpdated(() => {
+  // console.log("onUpdated");
+  getOffsetTop(); //如果每次修改dom，都调用这个函数会不会有些耗费性能？？？？
+  //每次更新，都触发这个函数，也就是多次遍历，bug  ，可以每次清空
+});
+
+//选中menu
+const currentMenu = ref();
+
+const selectMenu = (menu: any, index: any) => {
+  currentMenu.value = menu;
+  //调整父组件的scrollTop
+  //@ts-ignore
+  hospitalAttr?.pageScrollTo(offsetTopArr.value[index]);
+};
 </script>
 
 <template>
   <div class="register">
     <div class="header">
       <div class="title">
-        <h2>北京大学国际医院</h2>
+        <h2>{{ hospital?.hosname }}</h2>
         <p>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-dengji"></use>
           </svg>
-          <span>二级乙等</span>
+          <span>{{ hospital?.param.hostypeString }}</span>
         </p>
       </div>
       <div class="section">
@@ -22,17 +106,26 @@
           <div class="rule">
             <p>挂号规则</p>
             <ul>
-              <li><span class="light">预约周期</span><span>8天</span></li>
-              <li><span class="light">放号时间</span><span>18:00</span></li>
-              <li><span class="light">停挂时间</span><span>18:00</span></li>
-              <li><span class="light">退号时间</span><span>就诊前一工作日15:30前取消</span></li>
+              <li>
+                <span class="light">预约周期</span><span>{{ bookingRule?.cycle }} 天</span>
+              </li>
+              <li>
+                <span class="light">放号时间</span><span>{{ bookingRule?.releaseTime }}</span>
+              </li>
+              <li>
+                <span class="light">停挂时间</span><span>{{ bookingRule?.stopTime }}</span>
+              </li>
+              <li>
+                <span class="light">退号时间</span
+                ><span>就诊前一工作日 {{ bookingRule?.quitTime }} 前取消</span>
+              </li>
             </ul>
           </div>
           <div class="rule">
             <p>医院预约规则</p>
             <ul>
-              <li>
-                <span class="light">西院区预约号取号地点：西院区门诊楼一层大厅挂号窗口取号</span>
+              <li v-for="(item, index) in bookingRule?.rule" :key="index">
+                <span class="light">{{ item }}</span>
               </li>
             </ul>
           </div>
@@ -49,21 +142,33 @@
           <el-affix :offset="150">
             <el-scrollbar height="460px">
               <ul class="menu">
-                <li class="menu-item" v-for="item in 100" :key="item">
-                  <span>专科{{ item }}</span>
+                <li
+                  class="menu-item"
+                  :class="{ active: currentMenu === item }"
+                  v-for="(item, index) in depArr"
+                  :key="index"
+                  @click="selectMenu(item, index)"
+                >
+                  <span>{{ item.depname }}</span>
                 </li>
               </ul>
             </el-scrollbar>
           </el-affix>
         </div>
         <div class="right">
-          <div class="dep-group">
+          <div
+            ref="depGroupRef"
+            class="dep-group"
+            v-for="(item, index) in depArr"
+            :key="index"
+            :class="{ active: currentMenu == item }"
+          >
             <div class="dep-title">
-              <span>专科</span>
+              <span>{{ item.depname }}</span>
             </div>
             <ul>
-              <li v-for="item in 10" :key="item">
-                <span class="v-link">多发性硬化专科门诊 {{ item }}</span>
+              <li v-for="(depChild, index) in item.children" :key="index">
+                <span class="v-link">{{ depChild.depname }}</span>
               </li>
             </ul>
           </div>
@@ -161,7 +266,7 @@
       }
       .right {
         flex: 1;
-        background-color: aqua;
+        // background-color: aqua;
         margin-left: 30px;
         // padding: 20px;
         .dep-group {
