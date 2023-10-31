@@ -1,4 +1,7 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
+</script>
 
 <template>
   <div class="app-header container">
@@ -13,7 +16,7 @@
     </div>
     <ul>
       <li><span class="v-link">敬老版</span></li>
-      <li><span class="v-link">帮助中心</span></li>
+      <li><span class="v-link" @click="router.push(`/support/login`)">帮助中心</span></li>
       <li><span class="v-link fw-700">登录/注册</span></li>
     </ul>
   </div>

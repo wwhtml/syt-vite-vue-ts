@@ -95,6 +95,41 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/information/privacy-agreement/privacy-agreement.vue")
       }
     ]
+  },
+
+  /* 
+  帮助中心
+  */
+  {
+    path: "/support",
+    name: "support",
+    meta: {
+      title: "帮助中心",
+      isShowSearch: true
+    },
+    component: () => import("../views/support/support.vue"),
+    children: [
+      {
+        path: "login",
+        name: "login",
+
+        meta: {
+          title: "登录",
+          isMenu: true
+        },
+        component: () => import("@/views/support/login/login.vue")
+      },
+      {
+        path: "register",
+        name: "register",
+
+        meta: {
+          title: "注册",
+          isMenu: true
+        },
+        component: () => import("@/views/support/register/register.vue")
+      }
+    ]
   }
 ];
 
