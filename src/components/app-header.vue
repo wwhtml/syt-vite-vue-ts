@@ -1,8 +1,12 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+</script>
 
 <template>
   <div class="app-header container">
-    <h1 class="v-link active hover fs-20">
+    <h1 class="v-link active hover fs-20" @click="router.push('/')">
       <p class="logo">
         <img src="../assets/images/logo.png" alt="" />
       </p>
