@@ -51,11 +51,11 @@ const currentIndex = computed((): string => {
   display: flex;
   .left {
     flex: 0 0 200px;
-    background-color: antiquewhite;
+    // background-color: antiquewhite;
   }
   .right {
     flex: 1;
-    background-color: aqua;
+    // background-color: aqua;
     padding: 30px 0;
   }
 }
