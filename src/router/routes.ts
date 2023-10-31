@@ -104,40 +104,20 @@ const routes: RouteRecordRaw[] = [
     path: "/support",
     name: "support",
     meta: {
-      title: "帮助中心",
-      isShowSearch: true
+      title: "帮助中心"
     },
     component: () => import("../views/support/support.vue"),
     children: [
+      { path: "common", component: () => import("@/views/support/common/common.vue") },
+      { path: "login", component: () => import("@/views/support/login/login.vue") },
+      { path: "register", component: () => import("@/views/support/register/register.vue") },
+      { path: "account", component: () => import("@/views/support/account/account.vue") },
+      { path: "process", component: () => import("@/views/support/process/process.vue") },
+      { path: "cancle", component: () => import("@/views/support/cancle/cancle.vue") },
+      { path: "appeal", component: () => import("@/views/support/appeal/appeal.vue") },
       {
-        path: "login",
-        name: "login",
-
-        meta: {
-          title: "登录",
-          isMenu: true
-        },
-        component: () => import("@/views/support/login/login.vue")
-      },
-      {
-        path: "register",
-        name: "register",
-
-        meta: {
-          title: "注册",
-          isMenu: true
-        },
-        component: () => import("@/views/support/register/register.vue")
-      },
-      {
-        path: "cancle",
-        name: "cancle",
-
-        meta: {
-          title: "取消",
-          isMenu: true
-        },
-        component: () => import("@/views/support/cancle/cancle.vue")
+        path: "general-rules",
+        component: () => import("@/views/support/general-rules/general-rules.vue")
       }
     ]
   }

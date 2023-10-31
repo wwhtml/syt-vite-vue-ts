@@ -1,83 +1,108 @@
 <script lang="ts" setup>
-// vue
-import { computed, ref, watch } from "vue";
-// vue-router
-import { useRouter, useRoute } from "vue-router";
-//element组件
-import { ElScrollbar } from "element-plus";
+//vue
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-//菜单
+//api
+import { getSupportNavList } from "@/api/support/index";
+import type { NavListItem, NavListGroup } from "@/api/support/types";
+
 const route = useRoute();
 const router = useRouter();
-// console.log(`output->router`, router);
-console.log(`output->route`, route);
 
-//路由左侧菜单
-
-const routesMenu = computed(() => {
-  const res = route.matched[0].children;
-  return res.filter((item) => {
-    return item.meta?.isMenu == true;
-  });
+const currentRoute = computed(() => {
+  return route.fullPath;
 });
 
-const currentIndex = computed((): string => {
-  return route.name as string;
-});
-
-console.log(`output->routesMenu`, routesMenu);
-
-//监听路由，每次路由切换，scroll都指定
-const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
-watch(
-  () => route.fullPath,
-  () => {
-    // @ts-ignore
-    scrollbarRef.value!.pageScrollRef.setScrollTop(0);
+//navs数据
+const supportNav = ref<NavListGroup[]>();
+const getSupportNavListData = async () => {
+  const res = await getSupportNavList();
+  // console.log(res);
+  if (res.code == 200) {
+    supportNav.value = res.data;
   }
-);
+};
+getSupportNavListData();
+
+//选择menu
+const menuRoute = (path: string) => {
+  router.push(`/support/${path}`);
+};
 </script>
 
 <template>
-  <app-page ref="scrollbarRef">
+  <app-page>
     <div class="support container">
       <div class="left">
-        <el-affix :offset="70">
-          <app-menu :default-active="currentIndex">
-            <app-menu-item
-              v-for="item in routesMenu"
-              :key="item.path"
-              :index="item.path"
-              @click="router.push({ path: item.path })"
-            >
-              <span>{{ item.meta?.title }}111</span>
-            </app-menu-item>
-          </app-menu>
-        </el-affix>
+        <div class="nav-bar">
+          <div class="nav-item-group" v-for="group in supportNav" :key="group.id">
+            <div class="title">{{ group.name }}</div>
+            <ul>
+              <li
+                v-for="nav in group.children"
+                :key="nav.path"
+                @click="menuRoute(nav.path)"
+                :class="{ active: `/support/${nav.path}` == currentRoute }"
+              >
+                <span>{{ nav.name }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="right">
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <router-view></router-view>
       </div>
     </div>
   </app-page>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .support {
   display: flex;
-  min-height: 2000px;
   .left {
-    position: relative;
-    flex: 0 0 200px;
-    background-color: antiquewhite;
+    width: 200px;
   }
   .right {
     flex: 1;
-    background-color: aqua;
+  }
+}
+
+.nav-bar {
+  position: sticky;
+  top: 0;
+  .nav-item-group {
+    margin-bottom: 30px;
+  }
+  padding: 30px 0;
+  ul {
+    li {
+      padding-left: 10px;
+      margin-top: 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      span {
+        cursor: pointer;
+        &:hover {
+          color: $active-color;
+        }
+      }
+
+      &.active {
+        color: $active-color;
+        // font-weight: 700;
+        &:before {
+          content: "";
+          width: 5px;
+          height: 5px;
+          background-color: $active-color;
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
   }
 }
 </style>
