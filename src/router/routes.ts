@@ -128,6 +128,16 @@ const routes: RouteRecordRaw[] = [
           isMenu: true
         },
         component: () => import("@/views/support/register/register.vue")
+      },
+      {
+        path: "cancle",
+        name: "cancle",
+
+        meta: {
+          title: "取消",
+          isMenu: true
+        },
+        component: () => import("@/views/support/cancle/cancle.vue")
       }
     ]
   }

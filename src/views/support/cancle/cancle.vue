@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="register">regist11111er</div>
+  <div>cancle</div>
 </template>
 
 <style scoped lang="scss"></style>
