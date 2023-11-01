@@ -5,7 +5,8 @@ interface UserInfoType {
   token: number;
 }
 
-export const useUserStore = defineStore("user", {
+export const useUserStore = defineStore({
+  id: "user",
   // app 是当前store的名称；在Vue DevTools 插件中显示；创建store必须命名
   state: () => {
     return {

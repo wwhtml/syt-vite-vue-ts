@@ -37,7 +37,7 @@ const Exit = () => {
       <li><span class="v-link" @click="router.push(`/support/login`)">帮助中心</span></li>
       <li>
         <el-dropdown v-if="userInfo.name">
-          <span class="el-dropdown-link">
+          <span class="el-dropdown-link v-link">
             <span>{{ userInfo.name }}</span>
             <!-- <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-arrow"></use>
