@@ -11,7 +11,7 @@ import { getCode, getUserLogin } from "@/api/user/index";
 //组件
 import { ElMessage } from "element-plus";
 
-import type { FormInstance, FormRules } from "element-plus";
+import type { FormInstance } from "element-plus";
 
 //store
 import { useUserStore } from "@/stores/user";
