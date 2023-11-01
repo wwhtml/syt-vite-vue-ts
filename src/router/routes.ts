@@ -25,6 +25,7 @@ const routes: RouteRecordRaw[] = [
       title: "挂号"
     },
     component: () => import("@/views/hospital/hospital.vue"),
+
     children: [
       {
         path: "register",

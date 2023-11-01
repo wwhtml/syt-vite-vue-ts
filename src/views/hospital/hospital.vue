@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed, provide } from "vue";
+import { watch } from "vue";
+import { ref, computed, provide, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -12,6 +13,7 @@ const menuRoute = computed(() => {
     return item.meta?.isMenu;
   });
 });
+
 const currentIndex = computed((): string => {
   return route.name as string;
 });
@@ -19,17 +21,36 @@ const currentIndex = computed((): string => {
 //调整scrollTop
 const pageRef = ref();
 
-const pageScrollTo = (val: string) => {
+const pageScrollTo = (val: number) => {
   pageRef.value.pageScrollRef.setScrollTop(val);
 };
 
-provide("hospitalAttr", {
-  pageScrollTo: pageScrollTo
+const pageScrollTop = ref<number>(0);
+
+const handleScroll = ({ scrollTop }: { scrollLeft: number; scrollTop: number }) => {
+  pageScrollTop.value = scrollTop;
+};
+
+const hospitalAttr = reactive({
+  pageScrollTo: pageScrollTo,
+  pageScrollTop: pageScrollTop
 });
+
+provide("hospitalAttr", hospitalAttr);
+
+//因为这是二级路由，所以  scrollBehavior  设置无效，监听  路由调整scroll
+
+watch(
+  () => route.fullPath,
+  () => {
+    pageScrollTo(0);
+  }
+);
 </script>
 
 <template>
-  <app-page ref="pageRef">
+  <!-- {{ pageScrollTop }} -->
+  <app-page ref="pageRef" @scroll="handleScroll">
     <div class="hospital container">
       <div class="left">
         <el-affix :offset="70">
@@ -48,7 +69,7 @@ provide("hospitalAttr", {
       <div class="right">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
-            <component :is="Component" />
+            <component :is="Component" :key="route.path" />
           </transition>
         </router-view>
       </div>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 //vue
-import { ref, computed, onUpdated, inject } from "vue";
+import { ref, computed, onUpdated, inject, watch } from "vue";
 //vue-router
 import { useRoute } from "vue-router";
 
@@ -75,9 +75,25 @@ onUpdated(() => {
 const selectMenu = (menu: any, index: any) => {
   currentMenu.value = menu;
   //调整父组件的scrollTop
-  //@ts-ignore
+  // @ts-ignore
   hospitalAttr?.pageScrollTo(offsetTopArr.value[index]);
 };
+
+//通过滚动的距离控制 currentMenu的值
+watch(
+  //@ts-ignore
+  () => hospitalAttr.pageScrollTop,
+  (newValue) => {
+    if (newValue > offsetTopArr.value[0]) {
+      currentMenu.value = depArr.value[0];
+    }
+    offsetTopArr.value.map((item, index) => {
+      if (newValue > item - 120) {
+        currentMenu.value = depArr.value[index];
+      }
+    });
+  }
+);
 </script>
 
 <template>
