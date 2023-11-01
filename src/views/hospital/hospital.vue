@@ -59,7 +59,7 @@ watch(
               v-for="(item, index) in menuRoute"
               :key="index"
               :index="item.path"
-              @click="router.push({ path: item.path })"
+              @click="router.push(`/hospital/${route.params.hoscode}/${item.path}`)"
             >
               <span>{{ item.meta?.title }} </span>
             </app-menu-item>
