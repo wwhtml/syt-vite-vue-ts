@@ -148,6 +148,57 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/support/general-rules/general-rules.vue")
       }
     ]
+  },
+
+  /* 
+    用户信息相关
+  */
+  {
+    path: "/personal",
+    component: () => import("@/views/personal/personal.vue"),
+    children: [
+      {
+        path: "authentication",
+
+        meta: {
+          title: "实名认证",
+          isMenu: true
+        },
+        component: () => import("@/views/personal/authentication/authentication.vue")
+      },
+
+      {
+        path: "order",
+        meta: {
+          title: "挂号订单",
+          isMenu: true
+        },
+        component: () => import("@/views/personal/order/order.vue")
+      },
+      {
+        path: "patient",
+        meta: {
+          title: "就诊人管理",
+          isMenu: true
+        },
+        component: () => import("@/views/personal/patient/patient.vue")
+      },
+      {
+        path: "patient/add",
+        meta: {
+          title: "添加就诊人"
+        },
+        component: () => import("@/views/personal/patient/patient-add.vue")
+      },
+      {
+        path: "account",
+        meta: {
+          title: "修改账户信息",
+          isMenu: true
+        },
+        component: () => import("@/views/personal/account/account.vue")
+      }
+    ]
   }
 ];
 

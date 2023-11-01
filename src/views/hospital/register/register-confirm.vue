@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 //vue
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 //api
 import { getDoctorInfo } from "@/api/hospital/index";
 import type { HosDoctorInfo } from "@/api/hospital/types";
 
 const route = useRoute();
+const router = useRouter();
 
 const docInfo = ref<HosDoctorInfo>();
 const getDoctorInfoData = async () => {
@@ -24,7 +25,7 @@ getDoctorInfoData();
   <div class="register-confirm">
     <h1>确认挂号信息</h1>
     <div class="sub-title">选择就诊人</div>
-    <div class="add">
+    <div class="add" @click="router.push(`/personal/patient/add`)">
       <span>+ 添加就诊人</span>
     </div>
     <div class="sub-title">挂号信息</div>

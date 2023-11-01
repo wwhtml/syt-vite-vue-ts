@@ -22,7 +22,7 @@ const routesMenu = computed(() => {
 });
 
 const currentIndex = computed((): string => {
-  return route.name as string;
+  return route.path as string;
 });
 
 console.log(`output->routesMenu`, routesMenu);
@@ -40,15 +40,15 @@ watch(
 
 <template>
   <app-page ref="scrollbarRef">
-    <div class="information container">
+    <div class="personal container">
       <div class="left">
         <el-affix :offset="70">
           <app-menu :default-active="currentIndex">
             <app-menu-item
               v-for="item in routesMenu"
               :key="item.path"
-              :index="item.path"
-              @click="router.push(`/information/${item.path}`)"
+              :index="`/personal/` + item.path"
+              @click="router.push(`/personal/${item.path}`)"
             >
               <span>{{ item.meta?.title }}</span>
             </app-menu-item>
@@ -67,7 +67,7 @@ watch(
 </template>
 
 <style scoped lang="scss">
-.information {
+.personal {
   display: flex;
   min-height: 2000px;
   .left {

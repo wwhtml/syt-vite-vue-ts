@@ -52,7 +52,11 @@ const menuRoute = (path: string) => {
         </div>
       </div>
       <div class="right">
-        <router-view></router-view>
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </div>
     </div>
   </app-page>
