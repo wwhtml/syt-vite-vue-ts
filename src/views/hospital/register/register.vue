@@ -33,6 +33,8 @@ getHosDetail();
 
 //获取department数据
 const depArr = ref<Department[]>([]);
+const currentMenu = ref();
+
 const getHosDeparment = async () => {
   const res: ResData<Department[]> = await getHospitalDeparment(hoscode.value);
   if (res.code == 200) {
@@ -42,6 +44,7 @@ const getHosDeparment = async () => {
     //这里之所以删除最后一项，目的是为了完善点击menu，page滚动工能
     data.pop();
     depArr.value = data;
+    currentMenu.value = data[0];
   }
 };
 getHosDeparment();
@@ -69,8 +72,6 @@ onUpdated(() => {
 });
 
 //选中menu
-const currentMenu = ref();
-
 const selectMenu = (menu: any, index: any) => {
   currentMenu.value = menu;
   //调整父组件的scrollTop
