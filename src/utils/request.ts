@@ -3,19 +3,12 @@ import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } fro
 //使用下面的方法，一定要引入element-ui的样式文件，（单单是按需引入element-ui是不行的）
 import { ElMessage } from "element-plus";
 
-interface ResObject {
-  code: number;
-  message: string;
-  data: any;
-  ok: boolean;
-}
-
 //store
 import { useUserStore } from "@/stores/user";
 
 const instance: AxiosInstance = axios.create({
-  baseURL: "/api",
-  timeout: 5000
+  baseURL: "/api"
+  // timeout: 5000
 });
 
 /**
@@ -38,13 +31,14 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response;
-    // console.log(response);
 
     return data;
   },
   (error: AxiosError) => {
     const status = error.response?.status;
-    // console.log(error);
+    console.log(error);
+
+    console.log(status);
 
     switch (status) {
       case 401:
@@ -65,6 +59,14 @@ instance.interceptors.response.use(
       case 500 || 501 || 502 || 503 || 504 || 505:
         ElMessage({
           message: "服务器挂了",
+          type: "error",
+          duration: 0
+        });
+        break;
+
+      default:
+        ElMessage({
+          message: `${error.message}`,
           type: "error",
           duration: 0
         });
