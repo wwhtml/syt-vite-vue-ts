@@ -5,7 +5,7 @@ import { useRoute, useRouter } from "vue-router";
 
 //api
 import { getSupportNavList } from "@/api/support/index";
-import type { NavListItem, NavListGroup } from "@/api/support/types";
+import type { NavListGroup } from "@/api/support/types";
 
 const route = useRoute();
 const router = useRouter();
