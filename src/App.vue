@@ -2,14 +2,20 @@
 //组件
 import AppHeader from "@/components/app-header.vue";
 import AppFooter from "@/components/app-footer.vue";
+import AppLogin from "@/components/app-login.vue";
 
-const handle = () => {};
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/stores/user";
+
+let userStore = useUserStore();
+let { visiable } = storeToRefs(userStore);
+visiable.value = false;
 </script>
 
 <template>
   <el-container>
     <el-header>
-      <app-header @click="handle"></app-header>
+      <app-header></app-header>
     </el-header>
     <el-main>
       <router-view></router-view>
@@ -18,6 +24,8 @@ const handle = () => {};
       <app-footer></app-footer>
     </el-footer>
   </el-container>
+
+  <app-login v-model="visiable"></app-login>
 </template>
 
 <style scoped lang="scss">

@@ -1,7 +1,24 @@
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
-
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/stores/user";
 const router = useRouter();
+
+//pinia
+
+const userStore = useUserStore();
+
+const { userInfo } = storeToRefs(userStore);
+
+//点击登录.
+const showLogin = () => {
+  !userStore.visiable && (userStore.visiable = true);
+};
+//退出登录，清除token就可以了
+const Exit = () => {
+  userStore.$reset();
+  router.push("/");
+};
 </script>
 
 <template>
@@ -18,7 +35,35 @@ const router = useRouter();
     <ul>
       <li><span class="v-link">敬老版</span></li>
       <li><span class="v-link" @click="router.push(`/support/login`)">帮助中心</span></li>
-      <li><span class="v-link fw-700">登录/注册</span></li>
+      <li>
+        <el-dropdown v-if="userInfo.name">
+          <span class="el-dropdown-link">
+            <span>{{ userInfo.name }}</span>
+            <!-- <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-arrow"></use>
+            </svg> -->
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="router.push(`/personal/authentication`)">
+                实名认证</el-dropdown-item
+              >
+              <el-dropdown-item @click="router.push(`/personal/order`)">挂号订单</el-dropdown-item>
+              <el-dropdown-item @click="router.push(`/personal/patient`)"
+                >就诊人管理</el-dropdown-item
+              >
+              <el-dropdown-item @click="router.push(`/personal/account`)"
+                >修改账户信息</el-dropdown-item
+              >
+              <el-dropdown-item @click="Exit">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <span v-else class="v-link fw-700" @click="showLogin">登录/注册</span>
+      </li>
     </ul>
   </div>
 </template>
