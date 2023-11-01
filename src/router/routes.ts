@@ -37,6 +37,26 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/hospital/register/register.vue")
       },
       {
+        //门诊科室(挂号页面)
+        path: ":depcode/:cdepcode/source",
+        name: "repart",
+        meta: {
+          title: "source",
+          isShowHeaderSearch: true
+        },
+        component: () => import("@/views/hospital/register/register-source.vue")
+      },
+      {
+        //门诊科室(挂号页面)
+        path: ":depcode/:cdepcode/:docId/confirm",
+        name: "repart1",
+        meta: {
+          title: "confirm",
+          isShowHeaderSearch: true
+        },
+        component: () => import("@/views/hospital/register/register-confirm.vue")
+      },
+      {
         path: "detail",
         name: "detail",
         meta: {

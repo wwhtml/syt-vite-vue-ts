@@ -50,3 +50,30 @@ export interface Department {
   depname: string;
   children: DepChildren[];
 }
+
+//医生个人信息
+export interface Param1 {
+  dayOfWeek: string;
+  depname: string;
+  hosname: string;
+}
+
+export interface HosDoctorInfo {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
+  param: Param1;
+  hoscode: string;
+  depcode: string;
+  title: string;
+  docname: string;
+  skill: string;
+  workDate: string;
+  workTime: number;
+  reservedNumber: number;
+  availableNumber: number;
+  amount: number;
+  status: number;
+  hosScheduleId: string;
+}

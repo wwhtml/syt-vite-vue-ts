@@ -2,7 +2,7 @@
 //vue
 import { ref, computed, onUpdated, inject, watch } from "vue";
 //vue-router
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import { getHospitalDetail, getHospitalDeparment } from "@/api/hospital/index";
 import type { HosDetail, Hospital, BookingRule, Department } from "@/api/hospital/types";
@@ -11,6 +11,7 @@ const hospitalAttr = inject("hospitalAttr");
 
 //
 const route = useRoute();
+const router = useRouter();
 
 //获取参数
 const hoscode = computed((): string => {
@@ -177,8 +178,16 @@ watch(
               <span>{{ item.depname }}</span>
             </div>
             <ul>
-              <li v-for="(depChild, index) in item.children" :key="index">
-                <span class="v-link">{{ depChild.depname }}</span>
+              <li
+                v-for="(dep, index) in item.children"
+                :key="index"
+                @click="
+                  router.push({
+                    path: `/hospital/${route.params.hoscode}/${item.depcode}/${dep.depcode}/source`
+                  })
+                "
+              >
+                <span class="v-link">{{ dep.depname }}</span>
               </li>
             </ul>
           </div>
