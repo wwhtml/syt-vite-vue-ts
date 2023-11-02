@@ -1,7 +1,4 @@
-<script lang="ts" setup>
-//组件
-import AppInput from "@/components/app-input.vue";
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="patient-add">

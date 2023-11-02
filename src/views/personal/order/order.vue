@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import AppInput from "@/components/app-input.vue";
 
 const order = ref("");
 

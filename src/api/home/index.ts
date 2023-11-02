@@ -6,10 +6,15 @@ export const getHosLevelAndRegion = (params: string) => {
 };
 
 //获取医院列表
-export const getHosList = (page: number, limit: number, hostype = "", districtCode = "") => {
-  return request.get(
-    "/hosp/hospital/" + `${page}/${limit}?hostype=${hostype}&districtCode=${districtCode}`
-  );
+export const getHosList = (page: number, limit: number, hostype: string, districtCode: string) => {
+  return request
+    .get("/hosp/hospital/" + `${page}/${limit}`, {
+      hostype: hostype,
+      districtCode: districtCode
+    })
+    .catch((res) => {
+      console.log(`output->res`, res);
+    });
 };
 
 //通过关键字查找数据

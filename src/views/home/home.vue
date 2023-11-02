@@ -32,42 +32,58 @@ const params: Params = reactive({
 const hosLoading = ref<boolean>(false);
 
 const getHosListData = async () => {
+  //添加一个限制
+  //如果当前请求还没有请求成功就禁止下一个请求
+
   hosLoading.value = true;
   const res: ResData<HospitalList> = await getHosList(
     params.page,
     params.limit,
-    params.hostype,
-    params.districtCode
+    params.hostype as string,
+    params.districtCode as string
   );
-  console.log(res);
-  if (res.code == 200) {
-    const { content } = res.data;
-    hosList.value?.push(...content);
-    params.page++;
+  try {
+    if (res.code == 200) {
+      const { content } = res.data;
+      hosList.value?.push(...content);
+      params.page++;
 
-    hosLoading.value = false;
-    if (content.length < 10) {
-      finished.value = true;
-      inLoading.value = false;
+      hosLoading.value = false;
+      if (content.length < 10) {
+        finished.value = true;
+        inLoading.value = false;
+      }
     }
+  } catch {
+    console.log(`output->1`, "请求取消");
   }
 };
 getHosListData();
 
 //更改过滤条件
+//为了防止在快速切换的时候，第一次请求的数据覆盖了第二次请求的数据，这里做了一个防抖功能；在axios中又设置取消请求的功能 （双重保障）
+//如果充分考虑  axios的timeout 、这里的防抖时间周期 、 网速 等因素，只设置一个防抖功能就好！！！毕竟发送请求，在取消请求还是比较耗费性能的
+//防抖时间周期：不宜设置的太长，获取数据的延迟时间太长
+//这里做了一个防抖（就是短时间内只有最后一次触发事件）
+let timer = ref();
 const handleFilterChange = (value: {
   hostype: string | undefined;
   districtCode: string | undefined;
 }) => {
-  console.log(value);
-  hosList.value = [];
-  params.page = 1;
-  params.limit = 10;
-  params.hostype = value.hostype;
-  params.districtCode = value.districtCode;
-  finished.value = false;
-
-  getHosListData();
+  if (timer.value) {
+    clearTimeout(timer.value);
+    console.log(`output->clear`, "clear");
+  }
+  timer.value = setTimeout(() => {
+    // console.log(`output->2222`, 2222);
+    hosList.value = [];
+    params.page = 1;
+    params.limit = 10;
+    params.hostype = value.hostype;
+    params.districtCode = value.districtCode;
+    finished.value = false;
+    getHosListData();
+  }, 300);
 };
 
 //滚动加载
@@ -78,8 +94,8 @@ const infiniteGetHosListData = async () => {
   const res: ResData = await getHosList(
     params.page,
     params.limit,
-    params.hostype,
-    params.districtCode
+    params.hostype as string,
+    params.districtCode as string
   );
 
   if (res.code == 200 && res.data) {

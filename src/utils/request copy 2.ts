@@ -5,26 +5,19 @@ import type { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } fro
 import { ElMessage } from "element-plus";
 
 const instance: AxiosInstance = axios.create({
-  baseURL: "/api"
-  // timeout: 3000 //超时设置
+  baseURL: "/api",
+  timeout: 3000 //超时设置
 });
-//@ts-ignore
+let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 
-const pending: never[] = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
-const cancelToken = axios.CancelToken;
-//@ts-ignore
-const removePending = (config) => {
-  for (const p in pending) {
-    //@ts-ignore
-
+let removePending = (config) => {
+  for (let p in pending) {
     if (pending[p].u === config.url + "&" + config.method) {
       //当前请求在数组中存在时执行函数体
-      //@ts-ignore
-
       pending[p].f(); //执行取消操作
-      //@ts-ignore
-
       pending.splice(p, 1); //把这条记录从数组中移除
     }
   }
@@ -39,13 +32,18 @@ const removePending = (config) => {
  */
 instance.interceptors.request.use(
   (config) => {
-    removePending(config); //在一个ajax发送前执行一下取消操作
-    config.cancelToken = new cancelToken((c) => {
-      // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
-      //@ts-ignore
+    //如果还处于获取数据的状态，就取消请求 ;
 
-      pending.push({ u: config.url + "&" + config.method, f: c });
-    });
+    //某一个相同路径的请求取消
+    // if (config.url == "/hosp/hospital/1/10") {
+    //   //   source.cancel();
+    // }
+    config.cancelToken = source.token;
+    console.log(`output->config`, config);
+    // console.log(`output->config`, config.url);
+
+    // console.log(`output->qs()`, qs(config.url));
+
     return config;
   },
   (error: AxiosError) => {
@@ -57,8 +55,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
     // console.log(`output->response`, response);
-    removePending(response.config); //在一个ajax响应后再执行一下取消操作，把已经完成的请求从pending中移除
-
     const { data } = response;
     return data;
   },
@@ -67,39 +63,25 @@ instance.interceptors.response.use(
     // console.log(error);
 
     // console.log(status);
-
-    if (error.name == "CanceledError") {
-      // console.log(`output->error.name`, error.name);
-      // console.log(`output->error`, error);
-      return Promise.reject(error);
-    }
-
     let message = "";
+
     switch (status) {
       case 401:
         message = "token 失效，请重新登录";
-        ElMessage.error(message);
-
         break;
       case 403:
         message = "拒绝访问";
-        ElMessage.error(message);
-
         break;
       case 404:
         message = "请求地址错误";
-        ElMessage.error(message);
-
         break;
       case 500:
         message = "服务器故障";
-        ElMessage.error(message);
-
         break;
       default:
         message = `${error.message}`;
-        ElMessage.error(message);
     }
+    ElMessage.error(message);
 
     return Promise.reject(error);
   }
