@@ -12,8 +12,8 @@ const emit = defineEmits<{
   (
     e: "change",
     params: {
-      hostype: string | undefined;
-      districtCode: string | undefined;
+      hostype: string;
+      districtCode: string;
     }
   ): void;
 }>();
@@ -65,8 +65,8 @@ const seletArea = (item: FilterItem | undefined) => {
 
 watch(
   () => ({
-    hostype: curLeval.value?.value,
-    districtCode: curArea.value?.value
+    hostype: curLeval.value?.value as string,
+    districtCode: curArea.value?.value as string
   }),
   (params) => {
     emit("change", params);

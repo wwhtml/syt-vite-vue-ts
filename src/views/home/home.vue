@@ -19,8 +19,8 @@ const hosList = ref<HoslistItem[]>([]);
 interface Params {
   page: number;
   limit: number;
-  hostype: string | undefined;
-  districtCode: string | undefined;
+  hostype: string;
+  districtCode: string;
 }
 const params: Params = reactive({
   page: 1,
@@ -39,9 +39,11 @@ const getHosListData = async () => {
   const res: ResData<HospitalList> = await getHosList(
     params.page,
     params.limit,
-    params.hostype as string,
-    params.districtCode as string
-  );
+    params.hostype,
+    params.districtCode
+  ).catch((res) => {
+    console.log(`output->res`, res);
+  });
   try {
     if (res.code == 200) {
       const { content } = res.data;
@@ -66,13 +68,11 @@ getHosListData();
 //防抖时间周期：不宜设置的太长，获取数据的延迟时间太长
 //这里做了一个防抖（就是短时间内只有最后一次触发事件）
 let timer = ref();
-const handleFilterChange = (value: {
-  hostype: string | undefined;
-  districtCode: string | undefined;
-}) => {
+const handleFilterChange = (value: { hostype: string; districtCode: string }) => {
+  hosLoading.value = true;
+
   if (timer.value) {
     clearTimeout(timer.value);
-    console.log(`output->clear`, "clear");
   }
   timer.value = setTimeout(() => {
     // console.log(`output->2222`, 2222);
@@ -83,7 +83,7 @@ const handleFilterChange = (value: {
     params.districtCode = value.districtCode;
     finished.value = false;
     getHosListData();
-  }, 300);
+  }, 400);
 };
 
 //滚动加载
