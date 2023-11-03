@@ -1,4 +1,17 @@
+export interface Param {}
 
+export interface Data {
+	id: number;
+	createTime: string;
+	updateTime: string;
+	isDeleted: number;
+	param: Param;
+	parentId: number;
+	name: string;
+	value: string;
+	dictCode: string;
+	hasChildren: boolean;
+}
 
 export interface RootObject {
 	code: number;
