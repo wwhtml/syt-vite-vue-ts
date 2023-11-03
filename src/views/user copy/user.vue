@@ -77,7 +77,6 @@ watch(
   }
   .right {
     flex: 1;
-    padding: 38px 0;
     // background-color: aqua;
   }
 }
