@@ -154,8 +154,8 @@ const routes: RouteRecordRaw[] = [
     用户信息相关
   */
   {
-    path: "/personal",
-    component: () => import("@/views/personal/personal.vue"),
+    path: "/user",
+    component: () => import("@/views/user/user.vue"),
     children: [
       {
         path: "authentication",
@@ -164,7 +164,7 @@ const routes: RouteRecordRaw[] = [
           title: "实名认证",
           isMenu: true
         },
-        component: () => import("@/views/personal/authentication/authentication.vue")
+        component: () => import("@/views/user/authentication/authentication.vue")
       },
 
       {
@@ -173,7 +173,7 @@ const routes: RouteRecordRaw[] = [
           title: "挂号订单",
           isMenu: true
         },
-        component: () => import("@/views/personal/order/order.vue")
+        component: () => import("@/views/user/order/order.vue")
       },
       {
         path: "patient",
@@ -181,14 +181,14 @@ const routes: RouteRecordRaw[] = [
           title: "就诊人管理",
           isMenu: true
         },
-        component: () => import("@/views/personal/patient/patient.vue")
+        component: () => import("@/views/user/patient/patient.vue")
       },
       {
         path: "patient/add",
         meta: {
           title: "添加就诊人"
         },
-        component: () => import("@/views/personal/patient/patient-add.vue")
+        component: () => import("@/views/user/patient/patient-add.vue")
       },
       {
         path: "account",
@@ -196,7 +196,7 @@ const routes: RouteRecordRaw[] = [
           title: "修改账户信息",
           isMenu: true
         },
-        component: () => import("@/views/personal/account/account.vue")
+        component: () => import("@/views/user/account/account.vue")
       }
     ]
   }

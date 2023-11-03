@@ -48,14 +48,12 @@ const Exit = () => {
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="router.push(`/personal/authentication`)">
+              <el-dropdown-item @click="router.push(`/user/authentication`)">
                 实名认证</el-dropdown-item
               >
-              <el-dropdown-item @click="router.push(`/personal/order`)">挂号订单</el-dropdown-item>
-              <el-dropdown-item @click="router.push(`/personal/patient`)"
-                >就诊人管理</el-dropdown-item
-              >
-              <el-dropdown-item @click="router.push(`/personal/account`)"
+              <el-dropdown-item @click="router.push(`/user/order`)">挂号订单</el-dropdown-item>
+              <el-dropdown-item @click="router.push(`/user/patient`)">就诊人管理</el-dropdown-item>
+              <el-dropdown-item @click="router.push(`/user/account`)"
                 >修改账户信息</el-dropdown-item
               >
               <el-dropdown-item @click="Exit">退出</el-dropdown-item>
