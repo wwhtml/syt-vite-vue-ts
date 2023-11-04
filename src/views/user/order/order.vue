@@ -41,12 +41,12 @@ console.log(
   <div class="order">
     <h1 class="title">挂号订单</h1>
 
-    <el-form :inline="true">
-      <el-form-item label="就诊人：" style="height: 40px; width: 400px">
-        <app-input v-model="order" placeholder="就诊人" style="height: 40px" />
+    <el-form :inline="true" size="large">
+      <el-form-item label="就诊人：" style="width: 320px">
+        <el-input class="v-input" v-model="order" placeholder="就诊人"></el-input>
       </el-form-item>
-      <el-form-item label="订单状态：" style="height: 40px; width: 400px">
-        <app-input v-model="order" placeholder="订单状态" style="height: 40px" />
+      <el-form-item label="订单状态：">
+        <el-input class="v-input" v-model="order" placeholder="订单状态"></el-input>
       </el-form-item>
 
       <el-form-item><span class="v-link fw-700 fs-16 active hover">查询</span></el-form-item>
@@ -75,20 +75,10 @@ console.log(
 
 <style scoped lang="scss">
 .order {
-  padding: 38px 0;
-
   .title {
     margin-bottom: 60px;
   }
-  :deep(.el-form) {
-    .el-form-item {
-      .el-form-item__label {
-        height: 40px;
-        line-height: 40px;
-        color: $light-color;
-      }
-    }
-  }
+
   .info {
     margin-top: 40px;
     :deep(.table-header) {

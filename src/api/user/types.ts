@@ -37,3 +37,10 @@ export interface CertificateData {
   dictCode: string;
   hasChildren: boolean;
 }
+//提交的数据
+export interface RuleForm {
+  certificatesNo: string;
+  certificatesType: string;
+  certificatesUrl: string;
+  name: string;
+}

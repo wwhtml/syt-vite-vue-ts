@@ -10,7 +10,7 @@ import { ElScrollbar } from "element-plus";
 const route = useRoute();
 const router = useRouter();
 // console.log(`output->router`, router);
-console.log(`output->route`, route);
+// console.log(`output->route`, route);
 
 //路由左侧菜单
 
@@ -25,7 +25,7 @@ const currentIndex = computed((): string => {
   return route.path as string;
 });
 
-console.log(`output->routesMenu`, routesMenu);
+// console.log(`output->routesMenu`, routesMenu);
 
 //监听路由，每次路由切换，scroll都指定
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();

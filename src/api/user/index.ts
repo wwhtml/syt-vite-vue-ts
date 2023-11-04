@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 
-import type { LoginData } from "./types";
+import type { LoginData, RuleForm } from "./types";
 
 //获取验证码接口
 export const getCode = (phone: string) => {
@@ -18,3 +18,6 @@ export const getUserInfo = () => {
 //获取证件类型信息
 export const getCertationTypes = (CertificatesType = "CertificatesType") =>
   request.get("/cmn/dict/findByDictCode/" + CertificatesType);
+
+//用户认证接口
+export const postUserCertation = (data: RuleForm) => request.post("/user/auth/userAuah", data);

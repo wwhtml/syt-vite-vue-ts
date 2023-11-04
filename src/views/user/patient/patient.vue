@@ -21,7 +21,6 @@ const router = useRouter();
 
 <style scoped lang="scss">
 .patient {
-  padding-top: 38px;
   .title {
     margin-bottom: 30px;
   }

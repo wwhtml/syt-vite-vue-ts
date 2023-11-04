@@ -75,10 +75,11 @@ const handleBlur = () => {
 
     .el-input {
       background-color: #fff;
-      box-shadow: 0 1px 0 #eee;
-      transition: all 0.5s ease;
+
       height: 40px;
       width: 500px;
+      box-shadow: 0 1px 0 #eee;
+      transition: all 0.5s ease;
       &:hover {
         box-shadow: 0 1px 0 #ddd;
       }
