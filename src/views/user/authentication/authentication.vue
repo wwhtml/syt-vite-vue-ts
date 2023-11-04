@@ -52,7 +52,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
   console.log(`output->formEl`, formEl);
 
-  await formEl.validate((valid, fields) => {
+  await formEl.validate((valid) => {
     if (valid) {
       //没有报错信息
       // console.log("submit!");
