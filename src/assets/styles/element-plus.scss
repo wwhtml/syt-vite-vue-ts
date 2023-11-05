@@ -12,7 +12,7 @@
       &:before {
         content: "";
         width: 0px;
-        border: 0px solid $active-color;
+        border-bottom: 1px solid $active-color;
         position: absolute;
         left: 50%;
         bottom: -1px;
@@ -23,7 +23,6 @@
       &.is-focus {
         &:before {
           width: 100%;
-          border-width: 1px;
         }
       }
     }
@@ -46,7 +45,7 @@
           content: "";
           width: 0px;
 
-          border: 0px solid $active-color;
+          border-bottom: 1px solid $active-color;
           position: absolute;
           left: 50%;
           bottom: -1px;
@@ -57,7 +56,6 @@
           box-shadow: none !important;
           &:before {
             width: 100%;
-            border-width: 1px;
           }
         }
       }
@@ -81,7 +79,7 @@
           content: "";
           width: 0px;
 
-          border: 0px solid $active-color;
+          border-bottom: 1px solid $active-color;
           position: absolute;
           left: 50%;
           bottom: -1px;
@@ -92,7 +90,6 @@
           box-shadow: none !important;
           &:before {
             width: 100%;
-            border-width: 1px;
           }
         }
       }

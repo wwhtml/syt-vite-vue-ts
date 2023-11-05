@@ -57,9 +57,9 @@ const handleBlur = () => {
 
     &:before {
       content: "";
-      height: 1px;
-      width: 1px;
-      background-color: $active-color;
+      width: 0px;
+
+      border-bottom: 1px solid $active-color;
       position: absolute;
       left: 50%;
       bottom: -1px;

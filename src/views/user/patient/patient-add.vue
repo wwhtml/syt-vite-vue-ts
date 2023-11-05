@@ -275,8 +275,8 @@ const submit = async () => {
       </el-form>
     </div>
 
-    <div class="button">
-      <el-button @click="submit">保存</el-button>
+    <div class="button-group">
+      <el-button @click="submit" type="primary">保存</el-button>
       <el-button @click="resetFormInfo">重置</el-button>
     </div>
   </div>
@@ -311,6 +311,19 @@ const submit = async () => {
           color: $light-color;
         }
       }
+    }
+  }
+  .button-group {
+    margin-top: 60px;
+    padding-left: 120px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .el-button {
+      width: 100px;
+      height: 38px;
+      margin-right: 40px;
     }
   }
 }
