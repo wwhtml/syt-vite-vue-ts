@@ -2,6 +2,10 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+//获取就诊人，如果存在就渲染到页面，不存在就空着
+
+//添加就诊人的时候，先验证是否已经认证，如果没有认证，提示框（认证 or 跳过），可以跳过，也可以跳转的认证页面
 </script>
 
 <template>

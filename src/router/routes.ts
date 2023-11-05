@@ -159,7 +159,6 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "authentication",
-
         meta: {
           title: "实名认证",
           isMenu: true

@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 
-import type { LoginData, RuleForm } from "./types";
+import type { LoginData, RuleForm, PatientFormInfo } from "./types";
 
 //获取验证码接口
 export const getCode = (phone: string) => {
@@ -21,3 +21,15 @@ export const getCertationTypes = (CertificatesType = "CertificatesType") =>
 
 //用户认证接口
 export const postUserCertation = (data: RuleForm) => request.post("/user/auth/userAuah", data);
+
+//新增与修改已有的就诊人接口方法
+export const postAddOrUpdateUser = (data: PatientFormInfo) => {
+  if (data.id) {
+    return request.put("/user/patient/auth/update", data);
+  } else {
+    return request.post("/user/patient/auth/save", data);
+  }
+};
+
+//删除某一个就诊人的信息
+export const reqRemoveUser = (id: number) => request.delete("/user/patient/auth/remove/" + id);

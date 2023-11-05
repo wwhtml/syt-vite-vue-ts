@@ -3,8 +3,8 @@ import { reactive, ref } from "vue";
 
 import { getUserInfo, postUserCertation } from "@/api/user/index";
 import type { UserInfoData, CertificateData, RuleForm } from "@/api/user/types";
-
 import type { FormInstance, FormRules } from "element-plus";
+import { ElMessage } from "element-plus";
 
 const formRef = ref<FormInstance>();
 
@@ -41,6 +41,13 @@ const postData = async () => {
   try {
     const res: ResData<CertificateData> = await postUserCertation(formData);
     console.log(`output->res`, res);
+    if (res.code == 200) {
+      ElMessage({
+        message: "认证成功",
+        type: "success"
+      });
+      getUserInfoData();
+    }
   } catch (error) {
     console.log(`output->error`, error);
   }
@@ -52,14 +59,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
   console.log(`output->formEl`, formEl);
 
-  await formEl.validate((valid) => {
+  await formEl.validate((valid, fields) => {
+    //valid: 是否通过验证 true / false
+    //fields: 未通过验证饿rules
+
     if (valid) {
-      //没有报错信息
-      // console.log("submit!");
       postData();
     } else {
       //存在报错信息
-      // console.log("error submit!", fields);
+      console.log("error submit!", fields);
     }
   });
 };
@@ -69,7 +77,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields();
 };
 
-//获取某一个错误信息
+//聚焦的时候清除当前item的错误信息
 const nameFormItem = ref();
 const typeFormItem = ref();
 const numberFormItem = ref();
@@ -87,7 +95,9 @@ const focusResetField = (itemForm: any) => {
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-jinggao2"></use>
       </svg>
-      <span>{{ userInfo?.authStatus == 1 ? "已认证" : "未认证" }}</span>
+      <template v-if="userInfo">
+        <span>{{ userInfo?.authStatus == 1 ? "已认证" : "未认证" }}</span>
+      </template>
     </div>
     <div class="tips">
       <svg class="icon" aria-hidden="true">
@@ -99,6 +109,7 @@ const focusResetField = (itemForm: any) => {
     </div>
     <div class="form-container">
       <el-form
+        v-if="userInfo?.authStatus == 0"
         ref="formRef"
         style="max-width: 440px"
         size="large"
@@ -108,6 +119,8 @@ const focusResetField = (itemForm: any) => {
         :model="formData"
         :rules="rules"
       >
+        <!--  -->
+
         <el-form-item prop="name" label="姓名：" ref="nameFormItem">
           <el-input
             class="v-input"
@@ -141,15 +154,26 @@ const focusResetField = (itemForm: any) => {
           ></el-input>
         </el-form-item>
 
-        <!--    <el-form-item props="props.name" label="上传证件">
-          <el-input v-model="formData.name" placeholder="请输入真实姓名"></el-input>
-        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="submitForm(formRef)"> Create </el-button>
           <el-button @click="resetForm(formRef)">Reset</el-button>
         </el-form-item>
       </el-form>
+
+      <el-form v-if="userInfo?.authStatus == 1">
+        <el-form-item label="姓名：">
+          <div>{{ userInfo?.name }}</div>
+        </el-form-item>
+        <el-form-item label="证件类型">
+          <div>{{ userInfo?.certificatesType }}</div>
+        </el-form-item>
+        <el-form-item label="证件号码">
+          <div>{{ userInfo?.certificatesNo }}</div>
+        </el-form-item>
+      </el-form>
     </div>
+
+    <div class="user-info"></div>
   </div>
 </template>
 

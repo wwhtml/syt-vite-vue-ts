@@ -64,3 +64,38 @@
     }
   }
 }
+
+.v-data-picker {
+  &.el-date-editor {
+    &.el-input {
+      .el-input__wrapper {
+        padding: 0;
+        box-shadow: 0 1px 0 #eee;
+        transition: all 0.5s ease;
+        border-radius: 0;
+        &:hover {
+          box-shadow: 0 1px 0 #ddd;
+        }
+
+        &:before {
+          content: "";
+          width: 0px;
+
+          border: 0px solid $active-color;
+          position: absolute;
+          left: 50%;
+          bottom: -1px;
+          transform: translate(-50%);
+          transition: all 0.3s ease;
+        }
+        &.is-focus {
+          box-shadow: none !important;
+          &:before {
+            width: 100%;
+            border-width: 1px;
+          }
+        }
+      }
+    }
+  }
+}
