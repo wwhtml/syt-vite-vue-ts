@@ -190,6 +190,13 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/user/patient/patient-add.vue")
       },
       {
+        path: "patient/detail",
+        meta: {
+          title: "就诊人详情"
+        },
+        component: () => import("@/views/user/patient/patient-detail.vue")
+      },
+      {
         path: "account",
         meta: {
           title: "修改账户信息",

@@ -3,11 +3,9 @@
 </script>
 
 <template>
-  <div class="account">account</div>
+  <div class="patient-detail">
+    <div class="title">就诊人详情</div>
+  </div>
 </template>
 
-<style scoped lang="scss">
-.account {
-  padding: 38px 0;
-}
-</style>
+<style scoped lang="scss"></style>

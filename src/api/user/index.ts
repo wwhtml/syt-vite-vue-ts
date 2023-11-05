@@ -22,6 +22,9 @@ export const getCertationTypes = (CertificatesType = "CertificatesType") =>
 //用户认证接口
 export const postUserCertation = (data: RuleForm) => request.post("/user/auth/userAuah", data);
 
+//获取全部就诊人的信息
+export const getAllPatient = () => request.get("/user/patient/auth/findAll");
+
 //新增与修改已有的就诊人接口方法
 export const postAddOrUpdateUser = (data: PatientFormInfo) => {
   if (data.id) {
