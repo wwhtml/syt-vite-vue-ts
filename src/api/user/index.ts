@@ -34,5 +34,10 @@ export const postAddOrUpdateUser = (data: PatientFormInfo) => {
   }
 };
 
+//获取就诊人的详细信息
+export const getPatientDetail = (id: string) => {
+  return request.get(`/user/patient/auth/get/${id}`);
+};
+
 //删除某一个就诊人的信息
 export const reqRemoveUser = (id: number) => request.delete("/user/patient/auth/remove/" + id);

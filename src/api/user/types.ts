@@ -63,3 +63,39 @@ export interface PatientFormInfo {
   contactsCertificatesNo: string;
   contactsPhone: string;
 }
+
+//patientInfo
+
+export interface PatientInfo {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
+  param: {
+    certificatesTypeString?: any;
+    contactsCertificatesTypeString?: any;
+    cityString?: any;
+    fullAddress: string;
+    districtString?: any;
+    provinceString?: any;
+  };
+  userId: number;
+  name: string;
+  certificatesType: string;
+  certificatesNo: string;
+  sex: number;
+  birthdate?: any;
+  phone: string;
+  isMarry: number;
+  provinceCode?: any;
+  cityCode?: any;
+  districtCode?: any;
+  address: string;
+  contactsName: string;
+  contactsCertificatesType: string;
+  contactsCertificatesNo: string;
+  contactsPhone: string;
+  isInsure: number;
+  cardNo?: any;
+  status: string;
+}

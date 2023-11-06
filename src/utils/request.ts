@@ -55,9 +55,9 @@ instance.interceptors.response.use(
         message = "服务器故障";
         ElMessage.error(message);
         break;
-      // default:
-      //   message = `${error.message}`;
-      //   ElMessage.error(message);
+      default:
+        message = `服务器挂了`;
+        ElMessage.error(message);
     }
     //当前项目其他错误类型就不要处理了，交给组件
 

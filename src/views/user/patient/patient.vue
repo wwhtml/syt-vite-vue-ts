@@ -3,14 +3,15 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 import { getAllPatient } from "@/api/user/index";
+import type { PatientInfo } from "@/api/user/types";
 
 const router = useRouter();
 
 //获取就诊人，如果存在就渲染到页面，不存在就空着
-const patientInfo = ref();
+const patientInfo = ref<PatientInfo[]>();
 
 const getPatientInfoArr = async () => {
-  const res: ResData = await getAllPatient();
+  const res: ResData<PatientInfo[]> = await getAllPatient();
   if (res.code == 200) {
     patientInfo.value = res.data;
   }
@@ -31,15 +32,19 @@ getPatientInfoArr();
       <li>同一手机号，最多同时可以被八位就诊人作为联系电话</li>
     </ul>
 
-    <div class="patient-card">
+    <div class="patient-card" v-for="item in patientInfo" :key="item.id">
       <el-card class="mt-40">
         <template #header>
           <div class="card-header">
             <div class="left">
-              <span>姓名</span>
-              <span>身份证号码</span>
+              <span>{{ item.name }}</span>
+              <span>{{ item.certificatesNo }}</span>
             </div>
-            <div class="right" style="cursor: pointer">
+            <div
+              class="right"
+              style="cursor: pointer"
+              @click="router.push(`/user/patient/detail/${item.id}`)"
+            >
               <span class="mr-5">查看详情</span>
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-arrow-right"></use>
@@ -49,9 +54,11 @@ getPatientInfoArr();
         </template>
         <div class="content">
           <div class="card-blue">
-            <p class="btn"><span>自费</span></p>
-            <p>身份证号</p>
-            <p>sehnfenenenenenenenzhen</p>
+            <p class="btn">
+              <span>{{ item.isInsure }}</span>
+            </p>
+            <p>{{ item.certificatesType }}</p>
+            <p>{{ item.certificatesNo }}</p>
           </div>
         </div>
       </el-card>

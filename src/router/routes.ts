@@ -190,7 +190,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/views/user/patient/patient-add.vue")
       },
       {
-        path: "patient/detail",
+        path: "patient/detail/:id",
         meta: {
           title: "就诊人详情"
         },

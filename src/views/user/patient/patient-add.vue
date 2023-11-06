@@ -52,7 +52,7 @@ const archiveInfo = reactive({
 const archiveRules = reactive({
   isMarry: [{ required: true, message: "是否婚配", trigger: "change" }],
   isInsure: [{ required: true, message: "是否使用医保", trigger: "change" }],
-  addressSelected: [{ required: true, message: "请选择当前地址", trigger: "change" }],
+  addressSelected: [{ required: false, message: "请选择当前地址", trigger: "change" }],
   address: [{ required: true, message: "请填写详细地址", trigger: "change" }]
 });
 
@@ -64,10 +64,10 @@ const contactsInfo = reactive({
   contactsPhone: ""
 });
 const contactsRules = reactive({
-  contactsName: [{ required: true, message: "请输入真实姓名", trigger: "change" }],
-  contactsCertificatesType: [{ required: true, message: "请选择证件类型", trigger: "change" }],
-  contactsCertificatesNo: [{ required: true, message: "请输入证件号码", trigger: "change" }],
-  contactsPhone: [{ required: true, message: "请输入手机号码", trigger: "change" }]
+  contactsName: [{ required: false, message: "请输入真实姓名", trigger: "change" }],
+  contactsCertificatesType: [{ required: false, message: "请选择证件类型", trigger: "change" }],
+  contactsCertificatesNo: [{ required: false, message: "请输入证件号码", trigger: "change" }],
+  contactsPhone: [{ required: false, message: "请输入手机号码", trigger: "change" }]
 });
 
 //当前页面需要提交的信息
@@ -130,6 +130,7 @@ const submit = async () => {
     submitForm(patientFormRef.value);
     submitForm(archiveFormRef.value);
     submitForm(contactsFormRef.value);
+    postFormData();
   } catch (error) {
     console.log(`output->error`, error);
   }
