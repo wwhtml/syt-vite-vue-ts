@@ -40,4 +40,4 @@ export const getPatientDetail = (id: string) => {
 };
 
 //删除某一个就诊人的信息
-export const reqRemoveUser = (id: number) => request.delete("/user/patient/auth/remove/" + id);
+export const removePatient = (id: string) => request.delete("/user/patient/auth/remove/" + id);

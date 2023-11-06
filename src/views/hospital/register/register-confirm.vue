@@ -25,7 +25,7 @@ getDoctorInfoData();
   <div class="register-confirm">
     <h1>确认挂号信息</h1>
     <div class="sub-title">选择就诊人</div>
-    <div class="add" @click="router.push(`/personal/patient/add`)">
+    <div class="add" @click="router.push(`/user/patient/add`)">
       <span>+ 添加就诊人</span>
     </div>
     <div class="sub-title">挂号信息</div>

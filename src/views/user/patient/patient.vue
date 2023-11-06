@@ -32,7 +32,12 @@ getPatientInfoArr();
       <li>同一手机号，最多同时可以被八位就诊人作为联系电话</li>
     </ul>
 
-    <div class="patient-card" v-for="item in patientInfo" :key="item.id">
+    <div
+      class="patient-card"
+      v-for="item in patientInfo"
+      :key="item.id"
+      @click="router.push(`/user/patient/detail/${item.id}`)"
+    >
       <el-card class="mt-40">
         <template #header>
           <div class="card-header">
@@ -40,11 +45,7 @@ getPatientInfoArr();
               <span>{{ item.name }}</span>
               <span>{{ item.certificatesNo }}</span>
             </div>
-            <div
-              class="right"
-              style="cursor: pointer"
-              @click="router.push(`/user/patient/detail/${item.id}`)"
-            >
+            <div class="right" style="cursor: pointer">
               <span class="mr-5">查看详情</span>
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-arrow-right"></use>
@@ -87,6 +88,7 @@ getPatientInfoArr();
 
   .patient-card {
     padding: 0 60px;
+    cursor: pointer;
     .el-card__header {
       .card-header {
         display: flex;

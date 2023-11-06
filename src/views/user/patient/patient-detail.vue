@@ -4,7 +4,7 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { getPatientDetail } from "@/api/user/index";
+import { getPatientDetail, removePatient } from "@/api/user/index";
 import type { PatientInfo } from "@/api/user/types";
 
 const route = useRoute();
@@ -13,7 +13,7 @@ const pid = computed(() => route.params.id);
 
 const patientDetail = ref<PatientInfo>();
 const getData = async () => {
-  const res: ResData<PatientInfo> = await getPatientDetail(pid.value);
+  const res: ResData<PatientInfo> = await getPatientDetail(pid.value as string);
   console.log(`output->res`, res);
   if (res.code == 200) {
     patientDetail.value = res.data;
@@ -22,6 +22,16 @@ const getData = async () => {
   }
 };
 getData();
+
+const remove = () => {
+  const res: any = removePatient(pid.value as string);
+  if (res.code == 200) {
+    // eslint-disable-next-line no-constant-condition
+    if ((res.data = true)) {
+      console.log("删除成功");
+    }
+  }
+};
 </script>
 
 <template>
@@ -60,6 +70,11 @@ getData();
         <el-form-item label="详细地址">
           <span>{{ patientDetail?.address }}</span>
         </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="remove">删除就诊人</el-button>
+          <el-button>修改就诊人</el-button>
+        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -82,5 +97,10 @@ getData();
 }
 .form-container {
   padding-left: 120px;
+  color: $light-color;
+
+  :deep(.el-form-item__label) {
+    color: $light-color;
+  }
 }
 </style>
