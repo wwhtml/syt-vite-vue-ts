@@ -1,42 +1,6 @@
-export interface Param {
-	certificatesTypeString?: any;
-	contactsCertificatesTypeString?: any;
-	cityString?: any;
-	fullAddress: string;
-	districtString?: any;
-	provinceString?: any;
-}
-
-export interface Data {
-	id: number;
-	createTime: string;
-	updateTime: string;
-	isDeleted: number;
-	param: Param;
-	userId: number;
-	name: string;
-	certificatesType: string;
-	certificatesNo: string;
-	sex: number;
-	birthdate?: any;
-	phone: string;
-	isMarry: number;
-	provinceCode?: any;
-	cityCode?: any;
-	districtCode?: any;
-	address: string;
-	contactsName: string;
-	contactsCertificatesType: string;
-	contactsCertificatesNo: string;
-	contactsPhone: string;
-	isInsure: number;
-	cardNo?: any;
-	status: string;
-}
-
-export interface RootObject {
-	code: number;
-	message: string;
-	data: Data[];
-	ok: boolean;
+{
+  "certificatesNo": "",
+  "certificatesType": "",
+  "certificatesUrl": "",
+  "name": ""
 }

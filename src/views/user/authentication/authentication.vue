@@ -108,8 +108,8 @@ const focusResetField = (itemForm: any) => {
       >
     </div>
     <div class="form-container">
+      <!-- v-if="userInfo?.authStatus == 0" -->
       <el-form
-        v-if="userInfo?.authStatus == 0"
         ref="formRef"
         style="max-width: 440px"
         size="large"

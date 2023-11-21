@@ -5,9 +5,7 @@ import { useUserStore } from "@/stores/user";
 const router = useRouter();
 
 //pinia
-
 const userStore = useUserStore();
-
 const { userInfo } = storeToRefs(userStore);
 
 //点击登录.
